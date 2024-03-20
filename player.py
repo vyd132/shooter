@@ -4,7 +4,7 @@ import time
 
 def spawn():
     plat=wrap.sprite.add("mario-items",50,500,"moving_platform2")
-    platform={"id":plat,"perezarydka":3,"fire_time":time.time()}
+    platform={"id":plat,"perezarydka":0.5,"fire_time":time.time()}
     return platform
 
 def move(object,x):
