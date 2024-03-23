@@ -1,5 +1,5 @@
 import wrap
-import player as p_mod, bullet as b_mod,enemies as en_mod
+import player as p_mod, bullet as b_mod,enemies as en_mod,lifes as life_mod, buffs as buff_mod
 
 
 width=600
@@ -8,8 +8,11 @@ wrap.world.create_world(width,heith)
 
 bullets=[]
 enemies=[]
+buffs=[]
 
 platform=p_mod.spawn()
+lifes=life_mod.spawn()
+
 
 def y_check(spicok,for_el,comand,cord):
     y = wrap.sprite.get_y(for_el["id"])
@@ -18,8 +21,12 @@ def y_check(spicok,for_el,comand,cord):
         comand.remove(for_el)
         return True
 
+@wrap.always(5000)
+def buff_spwan():
+    buff=buff_mod.spawn()
+    buffs.append(buff)
 
-@wrap.always(10)
+@wrap.always(100)
 def en_spawn():
     enem=en_mod.spawn()
     enemies.append(enem)
@@ -42,7 +49,23 @@ def b_move():
     for bul in bullets:
         b_mod.move(bul)
         y_check(bullets,bul,b_mod,-50)
-        print(len(bullets))
+
+@wrap.always()
+def buff_move():
+    for buff in buffs.copy():
+        buff_mod.move(buff)
+        if buff_mod.y_check(buff, buff_mod):
+            buffs.remove(buff)
+            continue
+        # for bul in bullets.copy():
+        #     res = wrap.sprite.is_collide_sprite(buff["id"], bul["id"])
+        #     if res:
+        #         b_mod.remove(bul)
+        #         bullets.remove(bul)
+        #         bul["bullets_number"]=buff["buff"]
+        #         buff_mod.remove(buff)
+        #         buffs.remove(buff)
+        #         break
 
 
 
@@ -51,7 +74,7 @@ def en_move():
     for enemie in enemies.copy():
         en_mod.move(enemie)
         if  y_check(enemies, enemie, en_mod, 750):
-            print(len(enemies))
+            life_mod.damage(lifes)
             continue
         for bul in bullets.copy():
             res=wrap.sprite.is_collide_sprite(enemie["id"],bul["id"])
