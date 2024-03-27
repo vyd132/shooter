@@ -23,8 +23,9 @@ def y_check(spicok,for_el,comand,cord):
 
 @wrap.always(5000)
 def buff_spwan():
-    buff=buff_mod.spawn()
-    buffs.append(buff)
+    buff=buff_mod.line_spawn()
+    for lists in buff:
+        buffs.append(lists)
 
 @wrap.always(100)
 def en_spawn():
@@ -52,20 +53,15 @@ def b_move():
 
 @wrap.always()
 def buff_move():
+    global res
     for buff in buffs.copy():
         buff_mod.move(buff)
-        if buff_mod.y_check(buff, buff_mod):
+        if buff_mod.y_check(buff):
             buffs.remove(buff)
             continue
-        # for bul in bullets.copy():
-        #     res = wrap.sprite.is_collide_sprite(buff["id"], bul["id"])
-        #     if res:
-        #         b_mod.remove(bul)
-        #         bullets.remove(bul)
-        #         bul["bullets_number"]=buff["buff"]
-        #         buff_mod.remove(buff)
-        #         buffs.remove(buff)
-        #         break
+        # if buff_mod.col_check(platform,buff):
+        #     buff_mod.remove(buff)
+        #     buffs.remove(buff)
 
 
 
