@@ -1,7 +1,7 @@
 import wrap
 import random
 
-
+mark=0
 
 # def spawn():
 #     global buffs,text
@@ -28,10 +28,13 @@ def spawn(start):
     return buff_dict
 
 def line_spawn():
+    global mark
     buffs=[]
-    for line in range(0,481,160):
+    for line in range(16,625,208):
         buff=spawn(line)
+        buff["mark"]=mark
         buffs.append(buff)
+    mark+=1
     return buffs
 def move(object):
     for line in object["id"]:
@@ -48,6 +51,14 @@ def y_check(for_el):
         remove(for_el)
         return True
 
-def col_check(for_el,secondid):
-    res = wrap.sprite.is_collide_sprite(secondid, for_el["id"])
-    return res
+def col_check(object,second_id):
+    for line in object["id"]:
+        if wrap.sprite.is_collide_sprite(line,second_id["id"]):
+            remove(object)
+            return True
+
+def line_remove(object,spicok):
+    for elements in spicok:
+        if object['mark']==elements["mark"]:
+            remove(elements)
+            spicok.remove(elements)
