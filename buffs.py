@@ -54,11 +54,11 @@ def y_check(for_el):
 def col_check(object,second_id):
     for line in object["id"]:
         if wrap.sprite.is_collide_sprite(line,second_id["id"]):
-            remove(object)
             return True
 
 def line_remove(object,spicok):
-    for elements in spicok:
+    for elements in spicok.copy():
         if object['mark']==elements["mark"]:
             remove(elements)
             spicok.remove(elements)
+

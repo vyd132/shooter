@@ -59,8 +59,9 @@ def buff_move():
         if buff_mod.y_check(buff):
             buffs.remove(buff)
             continue
-    for buff in buffs:
+    for buff in buffs.copy():
         if buff_mod.col_check(buff,platform):
+            p_mod.buff(platform,buff)
             buff_mod.line_remove(buff,buffs)
             break
 
