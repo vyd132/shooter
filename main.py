@@ -1,5 +1,7 @@
+import random
+
 import wrap
-import player as p_mod, bullet as b_mod,enemies as en_mod,lifes as life_mod, buffs as buff_mod
+import player as p_mod, bullet as b_mod,enemies as en_mod,lifes as life_mod, buffs as buff_mod, long_buff as long_mod
 
 
 width=600
@@ -21,17 +23,21 @@ def y_check(spicok,for_el,comand,cord):
         comand.remove(for_el)
         return True
 
-@wrap.always(5000)
-def buff_spwan():
-    buff=buff_mod.line_spawn()
-    for lists in buff:
-        buffs.append(lists)
+# @wrap.always(5000)
+# def buff_spwan():
+#     buff=random.choice([buff_mod.line_spawn(),long_mod.line_spawn()])
+#     for lists in buff:
+#         buffs.append(lists)
 
-@wrap.always(100)
+@wrap.always(500)
+def armor_spawn():
+    buff=buff_mod.armor_spawn(16)
+    buffs.append(buff)
+
+@wrap.always(500)
 def en_spawn():
     enem=en_mod.spawn()
-    enemies.append(enem)
-
+    enemies.extend(enem)
 
 @wrap.on_mouse_move()
 def p_move(pos_x):

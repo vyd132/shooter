@@ -1,10 +1,24 @@
 import wrap
 import random
+import time
+
+a=time.time()
+
+enemies_col=1
 
 def spawn():
-    enemies=wrap.sprite.add("mario-enemies",random.randint(50,550),-50,random.choice(["crab","cloud","mushroom"]))
-    enemie={"id":enemies,"speed":2}
-    return enemie
+    global enemies_col,a
+    enemies_list=[]
+    b = time.time()
+    c = b - a
+    if c >= 5:
+        enemies_col+=2
+        a = time.time()
+    for spawn in range(enemies_col):
+        enemies=wrap.sprite.add("mario-enemies",random.randint(50,550),-50,random.choice(["crab","cloud","mushroom"]))
+        enemie={"id":enemies,"speed":2}
+        enemies_list.append(enemie)
+    return enemies_list
 
 def move(object):
     random.randint(-2, 2)
