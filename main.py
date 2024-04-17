@@ -16,6 +16,7 @@ platform=p_mod.spawn()
 lifes=life_mod.spawn()
 
 
+
 def y_check(spicok,for_el,comand,cord):
     y = wrap.sprite.get_y(for_el["id"])
     if (cord<0 and y <= cord)or(cord >= heith and y >= cord):
@@ -23,16 +24,12 @@ def y_check(spicok,for_el,comand,cord):
         comand.remove(for_el)
         return True
 
-# @wrap.always(5000)
-# def buff_spwan():
-#     buff=random.choice([buff_mod.line_spawn(),long_mod.line_spawn()])
-#     for lists in buff:
-#         buffs.append(lists)
+@wrap.always(5000)
+def buff_spwan():
+    buff=buff_mod.line_spawn(random.choice(['bullet','long']),True)
+    for lists in buff:
+        buffs.append(lists)
 
-@wrap.always(500)
-def armor_spawn():
-    buff=buff_mod.armor_spawn(16)
-    buffs.append(buff)
 
 @wrap.always(500)
 def en_spawn():
@@ -66,10 +63,12 @@ def buff_move():
             buffs.remove(buff)
             continue
     for buff in buffs.copy():
-        if buff_mod.col_check(buff,platform):
-            p_mod.buff(platform,buff)
-            buff_mod.line_remove(buff,buffs)
-            break
+        for bul in bullets.copy():
+            if buff_mod.col_check(buff,platform,bul):
+                b_mod.remove(bul)
+                p_mod.buff(platform,buff)
+                buff_mod.line_remove(buff,buffs)
+                break
 
 
 

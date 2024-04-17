@@ -12,7 +12,7 @@ def spawn():
     b = time.time()
     c = b - a
     if c >= 5:
-        enemies_col+=2
+        enemies_col+=1
         a = time.time()
     for spawn in range(enemies_col):
         enemies=wrap.sprite.add("mario-enemies",random.randint(50,550),-50,random.choice(["crab","cloud","mushroom"]))
