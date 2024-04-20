@@ -3,7 +3,7 @@ import wrap
 import random
 import bullet as bul_mod
 
-
+size=16
 mark=0
 
 # def spawn():
@@ -38,9 +38,10 @@ def spawn(start,number_of_buff,type,armor_ask):
 
 def armor_spawn(start,buff):
     armor=wrap.sprite.add('battle_city_items',start+80,-45,"base_defend_steel")
-    buff["armor_size"] = 16
-    wrap.sprite.set_size(armor,160,buff["armor_size"])
+    buff["armor_size"] = 5
+    wrap.sprite.set_size(armor,160,size)
     buff["armor"]=armor
+    buff['size']=16
 
 
 def line_spawn(type,ask):
@@ -54,10 +55,10 @@ def line_spawn(type,ask):
     return buffs
 def move(object):
     for line in object["id"]:
-        wrap.sprite.move(line,0,25)
-    wrap.sprite.move(object["text"], 0, 25)
+        wrap.sprite.move(line,0,5)
+    wrap.sprite.move(object["text"], 0, 5)
     if 'armor' in object:
-        wrap.sprite.move(object["armor"], 0, 25)
+        wrap.sprite.move(object["armor"], 0, 5)
 
 
 
@@ -84,16 +85,20 @@ def col_check(object,second_id):
             return True
 
 def armor_check(object,second_id):
+    global size
     '''
 
 
     :return:
     '''
     if 'armor' in object:
+        print("work")
         if wrap.sprite.is_collide_sprite(object['armor'], second_id['id']):
+            print("work1")
             object["armor_size"] -= 1
-            wrap.sprite.set_size(object["armor"], 160, object["armor_size"])
-
+            object['size']=object['size']-16/5
+            wrap.sprite.set_size(object["armor"], 160,object["size"])
+            return True
 
 '''
 После того как все платформы сдвинулись
@@ -111,15 +116,11 @@ def armor_check(object,second_id):
 
 def line_remove(object,spicok):
     for elements in spicok.copy():
-        if 'armor' in object:
-
-            if object["armor_size"]==0:
-                if object['mark'] == elements["mark"]:
-                    remove(elements)
-                    spicok.remove(elements)
-                    continue
         if object['mark']==elements["mark"]:
             remove(elements)
             spicok.remove(elements)
 
-
+def armor_hp_check(object):
+    if 'armor' in object and object["armor_size"] > 0:
+        return True
+    return False

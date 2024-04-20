@@ -22,6 +22,7 @@ def buff(object,second_id):
         wrap.sprite.set_size(object["id"],object["size"],16)
 
 
+
 def fire(object):
     b=time.time()
     c=b-object["fire_time"]

@@ -10,6 +10,6 @@ def spawn():
     lifes_dict["id"]=text
     return lifes_dict
 
-def damage(object):
-    object["hp"]-=1
+def damage(object,damage):
+    object["hp"]-=damage
     wrap.sprite_text.set_text(object["id"],str(object["hp"]))

@@ -64,11 +64,16 @@ def buff_move():
             continue
     for buff in buffs.copy():
         for bul in bullets.copy():
-            if buff_mod.col_check(buff,platform,bul):
+            if buff_mod.armor_check(buff,bul):
                 b_mod.remove(bul)
-                p_mod.buff(platform,buff)
-                buff_mod.line_remove(buff,buffs)
-                break
+                bullets.remove(bul)
+        if buff_mod.col_check(buff,platform):
+            if buff_mod.armor_hp_check(buff):
+                life_mod.damage(lifes,10)
+            else:
+                p_mod.buff(platform, buff)
+            buff_mod.line_remove(buff, buffs)
+            break
 
 
 
@@ -79,7 +84,7 @@ def en_move():
     for enemie in enemies.copy():
         en_mod.move(enemie)
         if  y_check(enemies, enemie, en_mod, 750):
-            life_mod.damage(lifes)
+            life_mod.damage(lifes,1)
             continue
         for bul in bullets.copy():
             res=wrap.sprite.is_collide_sprite(enemie["id"],bul["id"])
